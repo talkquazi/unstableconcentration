@@ -79,9 +79,9 @@ bash
 ## Usage
 To generate Unstable Concentration noise, execute the provided Python script `unstableconcentration.py` with the following command-line arguments:
 
-css
-
-`python unstableconcentration.py [outfilename] [seed] [multiplier]` 
+```bash
+python unstableconcentration.py [outfilename] [seed] [multiplier]
+```
 
 -   `outfilename`: The name of the output file (optional, default is 'output').
 -   `seed`: The seed value for random number generation (optional, default is -1 for random seed).
@@ -89,19 +89,19 @@ css
 
 ## Example
 
-bash
-
-`python unstableconcentration.py my_image 12345 2` 
+```bash
+python unstableconcentration.py my_image 12345 2
+```
 
 This command generates Unstable Concentration noise with a seed of 12345 and scales the resulting image by a factor of 2.
 
 ## Gradio
 
 ```bash
-`python gradio.py`
+python gradio.py
 ```
 
-Then visit ([localhost:7860]https://localhost:7860/)
+Then visit [localhost:7860](https://localhost:7860/)
 
 ## How It Works
 UnstableConcentration employs a 1-bit feedforward neural network to generate RGBA noise. The network architecture consists of an input layer with 512 units, 4 hidden layers with 512 units each, and an output layer with 32 units.
@@ -109,9 +109,12 @@ UnstableConcentration employs a 1-bit feedforward neural network to generate RGB
 The network takes a random input tensor as its input and applies a series of transformations to produce the output tensor, which represents RGBA noise. The output tensor is reshaped into a suitable format for image representation and converted to a PIL image.
   
 ## Acknowledgements
- [BitNet](https://github.com/kyegomez/BitNet) - For creating the 1bit inference interface
- [ChatGPT](https://chat.openai.com) - For help writing up the algorithms
- [Github Copilot](https://github.com/features/copilot) - For help with code documentation and formatting outputs
+ [BitNet](https://github.com/kyegomez/BitNet) - For creating the 1bit inference interface.
+
+ [ChatGPT](https://chat.openai.com) - For help writing up the algorithms.
+
+ [Github Copilot](https://github.com/features/copilot) - For help with code documentation and formatting outputs.
+
  
 ## Contribution
 Contributions to UnstableConcentration are welcome! If you'd like to contribute, please follow these guidelines:
