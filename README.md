@@ -1,9 +1,13 @@
 # Unstable Concentration
 A Novel Approach to Noise Generation using a Feed Forward Seed Based Noise algorithm
 
-**`Unstable Concentration`** offers a fresh perspective on noise generation, utilizing advanced techniques to produce RGBA noise with the aid of artificial intelligence (AI). This project presents an innovative algorithm grounded in **`1-bit quantization`**, which delivers intricate noise patterns reminiscent of the renowned Perlin Noise method.
+**`Unstable Concentration`** offers a fresh perspective on noise generation, utilizing advanced techniques to produce RGBA noise with the aid of artificial intelligence (AI). 
 
-With **`Unstable Concentration`**, users can explore a unique blend of AI-driven algorithms and seed-based reproduction to generate consistent and reproducible noise outputs. While it may not be the first of its kind, Unstable Concentration offers a refined approach to noise generation. Noise generation method is reproducible with a `seed`, allowing for **consistent** and **predictable** results.
+This project presents an innovative algorithm grounded in **`1-bit quantization`**, which delivers intricate noise patterns reminiscent of the renowned Perlin Noise method.
+
+With **`Unstable Concentration`**, users can explore a unique blend of AI-driven algorithms and seed-based reproduction to generate consistent and reproducible noise outputs. 
+
+While it may not be the first of its kind, Unstable Concentration offers a refined approach to noise generation. Noise generation method is reproducible with a `seed`, allowing for **consistent** and **predictable** results.
 
 Discover the capabilities of Unstable Concentration and unlock the potential of AI-driven RGBA noise for your projects.
 ![Alt text](samples/gradio_app.png)
