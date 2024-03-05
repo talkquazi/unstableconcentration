@@ -98,7 +98,7 @@ This command generates Unstable Concentration noise with a seed of 12345 and sca
 ## Gradio
 
 ```bash
-python gradio.py
+python gradio_app.py
 ```
 
 Then visit [localhost:7860](https://localhost:7860/)
