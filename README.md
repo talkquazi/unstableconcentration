@@ -23,16 +23,16 @@ Discover the capabilities of Unstable Concentration and unlock the potential of 
 ## Algorithm Overview
 The Unstable Concentration algorithm operates as follows:
 
-1.  **Input Tensor Generation**: A random input tensor xx of shape (512,)(512,) is created using PyTorch's `torch.randn()` function.
+1.  **Input Tensor Generation**: A random input tensor xx of shape (dimensions*dimensions*32,)(dimensions*dimensions*32,) is created using PyTorch's `torch.randn()` function.
     
 2.  **Neural Network Configuration**: An instance of the BitFeedForward class is created with the following parameters:
     
-    -   `input_dim`: 512
-    -   `hidden_dim`: 512
+    -   `input_dim`: dimensions * dimensions * 32
+    -   `hidden_dim`: dimensions * dimensions * 32
     -   `num_layers`: 4
 3.  **Feedforward Propagation**: The BitFeedForward network processes the input tensor xx through four hidden layers, resulting in an output tensor yy.
     
-4.  **Reshaping Output**: The output tensor yy is reshaped to dimensions (4,4,32)(4,4,32).
+4.  **Reshaping Output**: The output tensor yy is reshaped to dimensions (dimensions,dimensions,32)(dimensions,dimensions,32).
     
 5.  **Image Conversion**: The tensor yy is converted to a PIL image using the `Image.fromarray()` function. The values are cast to `uint8` and interpreted as RGBA data.
     
@@ -87,20 +87,24 @@ bash
 To generate Unstable Concentration noise, execute the provided Python script `unstableconcentration.py` with the following command-line arguments:
 
 ```bash
-python unstableconcentration.py [outfilename] [seed] [multiplier]
+python unstableconcentration.py [outfilename] [seed] [multiplier] [dimensions]
 ```
 
 -   `outfilename`: The name of the output file (optional, default is 'output').
 -   `seed`: The seed value for random number generation (optional, default is -1 for random seed).
 -   `multiplier`: The scaling factor for the image (optional, default is 1).
+-   `dimensions`: The dimension of the unstable concentration noise output (optional, default is 4).
+
+
+*Note: Setting dimensions above 6 requires at minimum 32gb of ram.
 
 ## Example
 
 ```bash
-python unstableconcentration.py my_image 12345 2
+python unstableconcentration.py my_image 12345 2 4
 ```
 
-This command generates Unstable Concentration noise with a seed of 12345 and scales the resulting image by a factor of 2.
+This command generates Unstable Concentration noise with a seed of 12345 and scales the resulting image by a factor of 2 and a dimension of 4x4.
 
 ## Gradio
 
@@ -111,7 +115,7 @@ python gradio_app.py
 Then visit [localhost:7860](https://localhost:7860/)
 
 ## How It Works
-UnstableConcentration employs a 1-bit feedforward neural network to generate RGBA noise. The network architecture consists of an input layer with 512 units, 4 hidden layers with 512 units each, and an output layer with 32 units.
+UnstableConcentration employs a 1-bit feedforward neural network to generate RGBA noise. The network architecture consists of an input layer with `dimension` units, 4 hidden layers with `dimension` units each, and an output layer with 32 units for color bits.
 
 The network takes a random input tensor as its input and applies a series of transformations to produce the output tensor, which represents RGBA noise. The output tensor is reshaped into a suitable format for image representation and converted to a PIL image.
   

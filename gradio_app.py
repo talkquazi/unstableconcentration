@@ -4,13 +4,14 @@ from PIL import Image
 import random
 import gradio as gr
 
-def process_image(multiplier=128, seed=-1):
+def process_image(multiplier=128, seed=-1, dimensions=4):
     """
     Process an image using the Unstable Concentration Feed Forward Seed Based Noise algorithm.
 
     Args:
         multiplier (int, optional): The scaling factor for the image. Defaults to 128.
         seed (int, optional): The seed value for random number generation. Defaults to -1.
+        dimensions (int, optional): The seed value for random number generation. Defaults to 4.
 
     Returns:
         Tuple of PIL images: The original and scaled images.
@@ -22,22 +23,22 @@ def process_image(multiplier=128, seed=-1):
         # generate a random number between 0 and 999999999999999999999
         seed = random.randint(0, 9999999999999999999)
         print("Seed value not provided. Generating a random seed value:", int(seed))
-        torch.manual_seed(int(seed))
+        torch.manual_seed(seed)
 
-    # Create a random input tensor of shape (512,)
-    x = torch.randn(512)
+    # Create a random input tensor of shape (dimensions*dimensions*32,)
+    x = torch.randn(int(dimensions)*int(dimensions)*32)
 
     # Create an instance of the BitFeedForward class with the following parameters:
-    # - input_dim: 512
-    # - hidden_dim: 512
+    # - input_dim: dimensions*dimensions*32
+    # - hidden_dim: dimensions*dimensions*32
     # - num_layers: 4
-    ff = BitFeedForward(512, 512, 4)
+    ff = BitFeedForward(int(dimensions)*int(dimensions)*32, int(dimensions)*int(dimensions)*32, 4)
 
     # Apply the BitFeedForward network to the input tensor x
     y = ff(x)
 
-    # Reshape the output tensor y to (4, 4, 32)
-    y = y.view(4, 4, 32)
+    # Reshape the output tensor y to (dimensions, dimensions, 32)
+    y = y.view(int(dimensions), int(dimensions), 32)
 
     # Convert the tensor to a PIL image
     image = Image.fromarray(y.detach().numpy().astype('uint8'), 'RGBA')
@@ -51,7 +52,8 @@ def process_image(multiplier=128, seed=-1):
 # Create Gradio interface
 inputs = [
     gr.inputs.Number(label="Multiplier", default=128),
-    gr.inputs.Number(label="Seed", default=-1)
+    gr.inputs.Number(label="Seed", default=-1),
+    gr.inputs.Number(label="Dimensions", default=4)
 ]
 
 def random_seed():

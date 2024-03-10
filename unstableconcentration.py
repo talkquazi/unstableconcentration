@@ -4,7 +4,7 @@ from PIL import Image
 import random
 import sys
 
-def process_image(outfilename='output', multiplier=128, seed=-1):
+def process_image(outfilename='output', multiplier=128, seed=-1, dimensions=4):
     """
     Process an image using the Unstable Concentration Feed Forward Seed Based Noise algorithm.
 
@@ -18,7 +18,7 @@ def process_image(outfilename='output', multiplier=128, seed=-1):
     """
     print("Multiplier: ", multiplier)
     print("Seed: ", seed)
-    print("Generating Unstable Concentration Noise With Dimensions:", 4*multiplier, "x", 4*multiplier, "y")
+    print("Generating Unstable Concentration Noise With Dimensions:", dimensions*multiplier, "x", dimensions*multiplier, "y")
 
     # Set the seed value or randomly generate a seed value
     if seed != -1:
@@ -29,20 +29,20 @@ def process_image(outfilename='output', multiplier=128, seed=-1):
         print("Seed value not provided. Generating a random seed value:", seed)
         torch.manual_seed(seed)
 
-    # Create a random input tensor of shape (512,)
-    x = torch.randn(512)
+    # Create a random input tensor of shape (dimensions*dimensions*32,)
+    x = torch.randn(dimensions*dimensions*32)
 
     # Create an instance of the BitFeedForward class with the following parameters:
-    # - input_dim: 512
-    # - hidden_dim: 512
+    # - input_dim: dimensions*dimensions*32
+    # - hidden_dim: dimensions*dimensions*32
     # - num_layers: 4
-    ff = BitFeedForward(512, 512, 4)
+    ff = BitFeedForward(dimensions*dimensions*32, dimensions*dimensions*32, 4)
 
     # Apply the BitFeedForward network to the input tensor x
     y = ff(x)
 
-    # Reshape the output tensor y to (4, 4, 32)
-    y = y.view(4, 4, 32)
+    # Reshape the output tensor y to (dimensions, dimensions, 32)
+    y = y.view(dimensions, dimensions, 32)
 
     # Convert the tensor to a PIL image
     image = Image.fromarray(y.detach().numpy().astype('uint8'), 'RGBA')
@@ -68,6 +68,9 @@ if __name__ == "__main__":
     # Set the multiplier value (Think console bits 4bit * multiplier)
     multiplier = int(sys.argv[3]) if len(sys.argv) > 3 else 128
 
+    # Set the dimensions value (Think 1x1 * dimensions)
+    dimensions = int(sys.argv[4]) if len(sys.argv) > 4 else 2
+
     # Call the process_image function with the seed and multiplier values
     print("Calling the Unstable Concentration process_image function")
-    process_image(outfilename, multiplier, seed)
+    process_image(outfilename, multiplier, seed, dimensions)
