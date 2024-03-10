@@ -30,19 +30,19 @@ def process_image(outfilename='output', multiplier=128, seed=-1, dimensions=4):
         torch.manual_seed(seed)
 
     # Create a random input tensor of shape (dimensions*dimensions*32,)
-    x = torch.randn(dimensions*dimensions*32)
+    x = torch.randn(int(dimensions)*int(dimensions)*32)
 
     # Create an instance of the BitFeedForward class with the following parameters:
     # - input_dim: dimensions*dimensions*32
     # - hidden_dim: dimensions*dimensions*32
     # - num_layers: 4
-    ff = BitFeedForward(dimensions*dimensions*32, dimensions*dimensions*32, 4)
+    ff = BitFeedForward(int(dimensions)*int(dimensions)*32, int(dimensions)*int(dimensions)*32, 4)
 
     # Apply the BitFeedForward network to the input tensor x
     y = ff(x)
 
     # Reshape the output tensor y to (dimensions, dimensions, 32)
-    y = y.view(dimensions, dimensions, 32)
+    y = y.view(int(dimensions), int(dimensions), 32)
 
     # Convert the tensor to a PIL image
     image = Image.fromarray(y.detach().numpy().astype('uint8'), 'RGBA')
@@ -51,7 +51,7 @@ def process_image(outfilename='output', multiplier=128, seed=-1, dimensions=4):
     image.save(outfilename+ '_'+ str(seed) +'.png')
 
     # Scale up the image by a multiplier
-    new_size = (image.width * multiplier, image.height * multiplier)
+    new_size = (int(image.width * int(multiplier)), int(image.height * multiplier))
     scaled_image = image.resize(new_size)
 
     # Save the scaled image as a PNG file
